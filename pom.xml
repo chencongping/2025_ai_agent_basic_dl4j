@@ -71,6 +71,28 @@
             <groupId>io.prometheus</groupId>
             <artifactId>simpleclient</artifactId>
         </dependency>
+        <!-- DeepLearning4J 核心库 -->
+        <dependency>
+            <groupId>org.deeplearning4j</groupId>
+            <artifactId>deeplearning4j-core</artifactId>
+            <version>1.0.0-M2.1</version>
+        </dependency>
+
+        <!-- ND4J 后端 (CPU版本) -->
+        <!-- 如果你有NVIDIA GPU，将 nd4j-native-platform 替换为 nd4j-cuda-11.8-platform -->
+        <dependency>
+            <groupId>org.nd4j</groupId>
+            <artifactId>nd4j-native-platform</artifactId>
+            <version>1.0.0-M2.1</version>
+        </dependency>
+
+        <!-- 可视化UI，用于在浏览器中监控训练 -->
+        <dependency>
+            <groupId>org.deeplearning4j</groupId>
+            <artifactId>deeplearning4j-ui</artifactId>
+            <version>1.0.0-M2.1</version>
+        </dependency>
+
     </dependencies>
     <!-- Spring Boot Actuator（暴露指标端点） -->
 
