@@ -17,6 +17,8 @@ import org.nd4j.linalg.lossfunctions.LossFunctions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+
 /**
  * 这是一个使用 DeepLearning4J 训练 MNIST 手写数字识别模型的完整示例。
  * 它包含了模型配置、数据加载、模型训练、评估和基本的可视化。
@@ -33,6 +35,9 @@ public class MnistClassifier {
         int seed = 123; // 随机种子，确保结果可复现
         int batchSize = 64; // 每次训练的样本数
         int numEpochs = 5; // 训练的总轮数
+        int numExamples = Integer.MAX_VALUE; // 使用所有样本
+        boolean binarize = true; // 将图像二值化
+        boolean shuffle = true; // 打乱数据顺序
 
         MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
                 .seed(seed)
@@ -61,11 +66,31 @@ public class MnistClassifier {
         // --- 2. 准备数据 ---
         log.info("正在加载 MNIST 数据集...");
         String localDataSetPath = "D:\\5_GitHub\\datasets\\mnist\\";
+        File dataDir = new File(localDataSetPath);
         // 训练集迭代器
+        // 使用匹配的构造函数参数顺序
+        DataSetIterator trainIter = new MnistDataSetIterator(
+                batchSize,          // batch
+                numExamples,        // numExamples
+                binarize,           // binarize
+                true,               // train (true表示加载训练集)
+                shuffle,            // shuffle
+                seed,               // rngSeed
+                dataDir             // topLevelDir
+        );
 
-        DataSetIterator trainIter = new MnistDataSetIterator(batchSize, true, seed);
-        // 测试集迭代器
-        DataSetIterator testIter = new MnistDataSetIterator(batchSize, false, seed);
+        DataSetIterator testIter = new MnistDataSetIterator(
+                batchSize,          // batch
+                numExamples,        // numExamples
+                binarize,           // binarize
+                false,              // train (false表示加载测试集)
+                shuffle,            // shuffle
+                seed,               // rngSeed
+                dataDir             // topLevelDir
+        );
+//        DataSetIterator trainIter = new MnistDataSetIterator(batchSize, true, seed);
+//        // 测试集迭代器
+//        DataSetIterator testIter = new MnistDataSetIterator(batchSize, false, seed);
         log.info("MNIST 数据集加载成功。");
 
 
